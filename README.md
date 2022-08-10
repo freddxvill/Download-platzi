@@ -8,9 +8,13 @@ En este caso es utilizado junto con la herramienta [FFmpeg](https://ffmpeg.org/)
 
 
 ## Instalación
+- Instalar [Python](https://www.python.org/downloads/).
+- Descargar o clonar el codigo en una carpeta con git.
 
-- Descargar o clonar el codigo en una carpeta.
-- Crear un **entorno virtual** de python dentro de la carpeta. Con [virtualenv](https://virtualenv.pypa.io/en/latest/) seria:
+```bash
+git clone https://github.com/freddxvill/Download-platzi.git
+```
+- Crear un **entorno virtual** de python dentro de la carpeta. Con [virtualenv](https://virtualenv.pypa.io/en/latest/) utilizar el siguiente comando:
 
 ```bash
 virtualenv venv
@@ -44,6 +48,8 @@ M-DASH y HLS son protocolos que se ejecutan a través de HTTP, utilizan TCP como
 Para saber mas ver : [Qué es M-DASH y HLS](https://www.cloudflare.com/es-es/learning/video/what-is-mpeg-dash/) 
 
 ## Instrucciones
+
+Crear un cuenta de en Platzi.
 
 Ejecutar el archivo platzi.py (entorno activado)
 
