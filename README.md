@@ -49,7 +49,7 @@ Para saber mas ver : [Qué es M-DASH y HLS](https://www.cloudflare.com/es-es/lea
 
 ## Instrucciones
 
-Crear un cuenta de en Platzi.
+Crear un cuenta en Platzi.
 
 Ejecutar el archivo platzi.py (entorno activado)
 
