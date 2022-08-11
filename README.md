@@ -97,6 +97,8 @@ Descarga terminada: curso de fundamentos de web scraping con python y xpath
 ```
 Una vez finalizado, ir al carpeta para ver los videos descargados.
 
+[![Captura2.png](https://i.postimg.cc/gj3m1zY1/Captura2.png)](https://postimg.cc/n9VyDt91)
+
 ### Funcionamiento del script
 
 Al ejecutar el script con los datos del usuario de platzi, Playwright abrirá un navegador (en este caso Chrome) para insertar los datos en el login. Posteriormente se realiza una busqueda del curso dentro de la pagina.
