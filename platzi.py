@@ -64,11 +64,11 @@ def download_video(video_link: str, path: str, clas_title: str):
         pass
 
 # ---------
-stop = True
+
 bloc = True
 num_clases = 0
 b = 1
-while bloc and stop:
+while bloc:
     i = 1
     cont_clas = True
     while True:
@@ -130,14 +130,7 @@ while bloc and stop:
 
             break
 
-    # parada - solo para prueba
-    parada = str(input('Continuar las descargas [y]/[n]: '))
-    if parada == 'n':
-        print('secciones: ', b)
-        print('Descarga detenida')
-        stop = False
-    else:
-        b += 1
+    b += 1
 
 print('clases: ', num_clases)
 print('Descarga terminada: ', curso)
