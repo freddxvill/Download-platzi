@@ -75,30 +75,32 @@ while bloc:
     i = 1
     cont_clas = True
     while True:
-        
-        log = True
+
         with sync_playwright() as p:
+            log = False
+            while log:
+
+                try:
+                    browser = p.chromium.launch(channel="chrome",headless=False) 
+                    page = browser.new_page(viewport= {"width": 800, "height": 600}) # user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36')
+                    stealth_sync(page)
+                    page.goto('https://platzi.com/login/')
+                    page.fill("//input[@type='email']", email)
+                    page.fill("//input[@type='password']", password)
+                    page.wait_for_timeout(2*1000)
+                    page.click("button[type='submit']")
+                    page.is_visible('div.NewSearch-box')
+                    page.wait_for_selector(selector= 'div.NewSearch-box', timeout=4000)
+                    print('Login: succesfully')
+                    page.fill("//input[@class='NewSearch-input']",curso)
+                    log = True
+                    
+                except:
+                    print('Login: Error, volviendo a ingresar ...')
+                    browser.close()
+
+
             
-            try:
-                browser = p.chromium.launch(channel="chrome",headless=False) 
-                page = browser.new_page(viewport= {"width": 800, "height": 600}) # user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36')
-                stealth_sync(page)
-                page.goto('https://platzi.com/login/')
-                page.fill("//input[@type='email']", email)
-                page.fill("//input[@type='password']", password)
-                page.wait_for_timeout(2*1000)
-                page.click("button[type='submit']")
-                page.is_visible('div.NewSearch-box')
-                page.wait_for_selector(selector= 'div.NewSearch-box', timeout=6000)
-                page.fill("//input[@class='NewSearch-input']",curso)
-                print('Login: succesfully')
-            except:
-                print('Login: error, volviendo a ingresar ...')
-                log = False
-                break
-
-
-
             page.wait_for_timeout(2*1000)
             page.keyboard.press('Enter')
             page.is_visible('div.CourseList')
@@ -121,8 +123,9 @@ while bloc:
                 page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
                 page.wait_for_timeout(3*1000)
                 title = page.title()
-                i += 1
-                num_clases += 1
+                if log == True:
+                    i += 1
+                    num_clases += 1
             except:
                 cont_clas = False
                 browser.close()
@@ -143,8 +146,8 @@ while bloc:
         except:
             break
 
-    if log == True:
-        b += 1
+    
+    b += 1
 
 print('clases: ', num_clases)
 print('Descarga terminada: ', curso)
