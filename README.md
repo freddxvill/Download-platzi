@@ -106,8 +106,8 @@ Una vez encontrado el curso, se dirige a la primera clase del curso y con Playwr
 
 ## Notas importantes
 
-- El script abrirá y cerrará un navegador para hallar el link de cada video, esto sucederá debido a que se intentó usar el modo `headless=True`el cual permite navegar en una página sin tener que mostrar el navegador. Este parámetro funciona muy bien en otras páginas, pero no funciono en el caso de Platzi. Por lo tanto, hasta este momento, para que el script funcione, debe abrir y cerrar la interfaz al encontrar el link.
-- Si el script se detiene en la página del **Login**, solo debe detener el cript y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
+- El script abrirá y cerrará un navegador para hallar el link de cada video, esto sucederá debido a que se intentó usar el modo `headless=True`el cual permite navegar en una página sin tener que mostrar el navegador. Este parámetro funciona muy bien en otras páginas, pero no funciono en el caso de Platzi. Por lo tanto, hasta este momento, para que el script funcione, debe abrir y cerrar la interfaz para encontrar el link.
+- Si el script se detiene en la página del **Login**, solo debe detener el script y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
 - El script descargará videos con resolución 1080x720, pero puede cambiarlo a 1920x1080 modificando dentro del script, en la funcion download, después de `'-map'` en vez de `'0:1'` colocar `'0:3'`. Esto seleccionará el video stream a 1080p, el cual tendrá un mayor tamaño, por lo cual la descarga tomará un poco más de tiempo.
 
 ## Referencias
