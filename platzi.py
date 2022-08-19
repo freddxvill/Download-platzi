@@ -47,10 +47,11 @@ def process_text(text: str):
 
 
 
-def download_video(video_link: str, path: str, clas_title: str):
+def download_video(path: str, clas_title: str):
+    global video_link
     try:
         if os.path.exists(path):
-            print('Archivo ya descargado en: ', path)
+            print('Archivo ya descargado:', clas_title)
             print('')
 
         else:
@@ -58,6 +59,8 @@ def download_video(video_link: str, path: str, clas_title: str):
                 print(f'--------  Descargando clase: {clas_title} -----------' )
                 subprocess.run(['ffmpeg','-loglevel' ,'quiet', '-stats', '-i', video_link, '-map', '0:0', '-map', '0:1', '-c', 'copy', path])
                 print('')
+                video_link = ''
+
             else:
                 print('Link no encontrado')
 
@@ -91,6 +94,7 @@ while bloc:
                     page.click("button[type='submit']")
                     page.is_visible('div.NewSearch-box')
                     page.wait_for_selector(selector= 'div.NewSearch-box', timeout=4000)
+
                     print('Login: succesfully')
                     page.fill("//input[@class='NewSearch-input']",curso)
                     log = False
@@ -121,12 +125,14 @@ while bloc:
                 page.wait_for_timeout(2*1000)
                 page.on("request", handle_requests)
                 page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
-                page.wait_for_timeout(3*1000)
+                page.wait_for_timeout(4*1000)
                 title = page.title()
                 
                 if log == False:
                     i += 1
                     num_clases += 1
+                browser.close()
+
             except:
                 cont_clas = False
                 browser.close()
@@ -143,7 +149,7 @@ while bloc:
             clas_title = f'{num_clases}_{clas_title}'
             path_dir = complet_path + f'/{clas_title}.mp4'
             
-            download_video(video_link=video_link, path=path_dir, clas_title=clas_title)
+            download_video(path=path_dir, clas_title=clas_title)
         except:
             break
 
