@@ -67,7 +67,7 @@ def download_video(video_link: str, path: str, clas_title: str):
         pass
 
 # ---------
-
+log = True
 bloc = True
 num_clases = 0
 b = 1
@@ -76,18 +76,26 @@ while bloc:
     cont_clas = True
     while True:
         with sync_playwright() as p:
+            
+            try:
+                browser = p.chromium.launch(channel="chrome",headless=False) 
+                page = browser.new_page(viewport= {"width": 800, "height": 600}) # user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36')
+                stealth_sync(page)
+                page.goto('https://platzi.com/login/')
+                page.fill("//input[@type='email']", email)
+                page.fill("//input[@type='password']", password)
+                page.wait_for_timeout(2*1000)
+                page.click("button[type='submit']")
+                page.is_visible('div.NewSearch-box')
+                page.wait_for_selector(selector= 'div.NewSearch-box', timeout=6000)
+                page.fill("//input[@class='NewSearch-input']",curso)
+                print('Login: succesfully')
+            except:
+                print('Login: error, volviendo a ingresar ...')
+                log = False
+                break
 
-            browser = p.chromium.launch(channel="chrome",headless=False) 
-            page = browser.new_page(viewport= {"width": 800, "height": 600}) # user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36')
-            stealth_sync(page)
-            page.goto('https://platzi.com/login/')
-            page.fill("//input[@type='email']", email)
-            page.fill("//input[@type='password']", password)
-            page.wait_for_timeout(2*1000)
-            page.click("button[type='submit']")
-            page.is_visible('div.NewSearch-box')
-            page.wait_for_selector(selector= 'div.NewSearch-box', timeout=6000)
-            page.fill("//input[@class='NewSearch-input']",curso)
+
 
             page.wait_for_timeout(2*1000)
             page.keyboard.press('Enter')
@@ -131,10 +139,10 @@ while bloc:
             
             download_video(video_link=video_link, path=path_dir, clas_title=clas_title)
         except:
-
             break
 
-    b += 1
+    if log == True:
+        b += 1
 
 print('clases: ', num_clases)
 print('Descarga terminada: ', curso)
