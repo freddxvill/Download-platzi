@@ -104,7 +104,7 @@ while bloc:
                 # prueba del primero
                 page.wait_for_timeout(2*1000)
                 page.on("request", handle_requests)
-                page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/a")
+                page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
                 page.wait_for_timeout(2*1000)
                 title = page.title()
                 i += 1
