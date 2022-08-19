@@ -98,7 +98,7 @@ while bloc:
                 browser.close()
 
             try:
-                selector_2 = f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/a"
+                selector_2 = f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a"
                 page.wait_for_selector(selector= selector_2, timeout=6000)
                 # click al curso n
                 # prueba del primero
