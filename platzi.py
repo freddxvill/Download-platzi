@@ -75,6 +75,8 @@ while bloc:
     i = 1
     cont_clas = True
     while True:
+        
+        log = True
         with sync_playwright() as p:
             
             try:
