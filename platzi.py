@@ -36,7 +36,7 @@ def handle_requests(request):
             video_link = request.url
             print('link: ok')
         else:
-            print('link: error')
+            pass
 
 def process_text(text: str):
     text = text.replace(' - Platzi', '')
@@ -86,6 +86,7 @@ while bloc:
             page.wait_for_timeout(2*1000)
             page.click("button[type='submit']")
             page.is_visible('div.NewSearch-box')
+            page.wait_for_selector(selector= 'div.NewSearch-box', timeout=6000)
             page.fill("//input[@class='NewSearch-input']",curso)
 
             page.wait_for_timeout(2*1000)
