@@ -67,7 +67,7 @@ def download_video(video_link: str, path: str, clas_title: str):
         pass
 
 # ---------
-log = True
+
 bloc = True
 num_clases = 0
 b = 1
@@ -77,7 +77,7 @@ while bloc:
     while True:
 
         with sync_playwright() as p:
-            log = False
+            log = True
             while log:
 
                 try:
@@ -93,7 +93,7 @@ while bloc:
                     page.wait_for_selector(selector= 'div.NewSearch-box', timeout=4000)
                     print('Login: succesfully')
                     page.fill("//input[@class='NewSearch-input']",curso)
-                    log = True
+                    log = False
                     
                 except:
                     print('Login: Error, volviendo a ingresar ...')
@@ -123,7 +123,8 @@ while bloc:
                 page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
                 page.wait_for_timeout(3*1000)
                 title = page.title()
-                if log == True:
+                
+                if log == False:
                     i += 1
                     num_clases += 1
             except:
