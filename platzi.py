@@ -36,7 +36,7 @@ def handle_requests(request):
             video_link = request.url
             print('link: ok')
         else:
-            pass
+            print('link: error')
 
 def process_text(text: str):
     text = text.replace(' - Platzi', '')
@@ -54,9 +54,12 @@ def download_video(video_link: str, path: str, clas_title: str):
             print('')
 
         else:
-            print(f'--------  Descargando clase: {clas_title} -----------' )
-            subprocess.run(['ffmpeg','-loglevel' ,'quiet', '-stats', '-i', video_link, '-map', '0:0', '-map', '0:1', '-c', 'copy', path])
-            print('')
+            if video_link:
+                print(f'--------  Descargando clase: {clas_title} -----------' )
+                subprocess.run(['ffmpeg','-loglevel' ,'quiet', '-stats', '-i', video_link, '-map', '0:0', '-map', '0:1', '-c', 'copy', path])
+                print('')
+            else:
+                print('Link no encontrado')
 
     except Exception as e:
         print('Error en la descarga: clase no descargada')
@@ -105,7 +108,7 @@ while bloc:
                 page.wait_for_timeout(2*1000)
                 page.on("request", handle_requests)
                 page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
-                page.wait_for_timeout(2*1000)
+                page.wait_for_timeout(3*1000)
                 title = page.title()
                 i += 1
                 num_clases += 1
