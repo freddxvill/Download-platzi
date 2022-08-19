@@ -32,7 +32,7 @@ def handle_requests(request):
     global video_link
     
     if request.url:
-        if 'manifest' in request.url or '//mdstrm.com/video' in request.url:
+        if 'manifest' in request.url or '//mdstrm.com/video/' in request.url:
             video_link = request.url
             print('link: ok')
         else:
