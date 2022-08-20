@@ -4,15 +4,23 @@ import os
 import subprocess
 
 print('Descargador de cursos [colocar los datos correctamente]')
-print('volver a ejecutar si falla el login o algun dato')
+print('Debe estar ya logeado con su navegador Chrome')
 print('-'*80)
-curso = str(input('Curso [nombre completo]: '))
-email = str(input('Email [@gmail.com]: '))
-password = str(input('Password: '))
+curso = str(input('Curso [copiar todo el nombre del curso]: '))
+
+# Debido a las nuevas funciones estos datos son innecesarios
+#email = str(input('Email [@gmail.com]: '))
+#password = str(input('Password: '))
+
 print('Path [direccion de la carpeta donde sera descargado][ejem: D:/cursos_programacion/ ][debe terminar con un /]')
 print('[ Se creara una carpeta dentro del Path con el nombre del curso ]')
 path = str(input('Path: '))
 print('-'*80)
+
+#--------------- Ruta propia del navegador Chrome----------------
+user_data = 'C:/Users/HP/AppData/Local/Google/Chrome/User Data'
+chrome_path = 'C:/Users/HP/AppData/Local/Google/Chrome/Application/chrome.exe'
+user_agent_nav = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
 
 video_link = ''
 
@@ -78,38 +86,44 @@ while bloc:
     i = 1
     cont_clas = True
     while True:
-
         with sync_playwright() as p:
-            log = True
-            while log:
+            log = False
+            #while log:
+            try:
 
-                try:
-                    browser = p.chromium.launch(channel="chrome",headless=False) 
-                    page = browser.new_page(viewport= {"width": 800, "height": 600}) # user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36')
-                    stealth_sync(page)
-                    page.goto('https://platzi.com/login/')
-                    page.fill("//input[@type='email']", email)
-                    page.fill("//input[@type='password']", password)
-                    page.wait_for_timeout(2*1000)
-                    page.click("button[type='submit']")
-                    page.is_visible('div.NewSearch-box')
-                    page.wait_for_selector(selector= 'div.NewSearch-box', timeout=4000)
-
-                    print('Login: succesfully')
-                    page.fill("//input[@class='NewSearch-input']",curso)
-                    log = False
+                browser = p.chromium.launch_persistent_context(
+                                        user_data_dir= user_data,
+                                        #channel="chrome",
+                                        executable_path= chrome_path,
+                                        headless=True,
+                                        user_agent= user_agent_nav
+                                        )                                   
+                page = browser.new_page()
+                #stealth_sync(page)
+                page.goto('https://platzi.com/', wait_until='networkidle')
+                page.wait_for_timeout(2*1000)
+                #page.goto('https://platzi.com/login/')
+                #page.fill("//input[@type='email']", email)
+                #page.fill("//input[@type='password']", password)
+                #page.wait_for_timeout(3*1000) # delay
+                #page.click("button[type='submit']")
+                page.is_visible('div.NewSearch-box')
+                page.wait_for_selector(selector= 'div.NewSearch-box', timeout=4000)
+                print('Login: succesfully')
+                page.fill("//input[@class='NewSearch-input']",curso)
+                log = True
                     
-                except:
-                    print('Login: Error, volviendo a ingresar ...')
-                    browser.close()
+            except:
+                print('Login: Error, volviendo a ingresar ...')
+                browser.close()
 
-
-            
-            page.wait_for_timeout(2*1000)
+            page.wait_for_timeout(2*1000) # delay
             page.keyboard.press('Enter')
             page.is_visible('div.CourseList')
             # click al primer resultado para el curso solicitado
             page.click("//div[@class='CourseList']/article[1]//a[@class='CourseCard-content-title']") 
+
+            # Verificando que el bloque exista para continuar
             try:
                 selector = f"//div[@class='ContentBlock'][{b}]"
                 page.wait_for_selector(selector= selector, timeout=6000)
@@ -117,6 +131,7 @@ while bloc:
                 bloc = False
                 browser.close()
 
+            # Verificando que la clase exista, sino se pasara posteriormente al sig. bloque
             try:
                 selector_2 = f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a"
                 page.wait_for_selector(selector= selector_2, timeout=6000)
@@ -125,13 +140,13 @@ while bloc:
                 page.wait_for_timeout(2*1000)
                 page.on("request", handle_requests)
                 page.click(f"//div[@class='ContentBlock'][{b}]//li[{i}]/div/div/a")
-                page.wait_for_timeout(4*1000)
+                page.wait_for_timeout(3*1000)
                 title = page.title()
                 
-                if log == False:
+                if log == True:
                     i += 1
                     num_clases += 1
-                browser.close()
+                    print('i sig: ',i)
 
             except:
                 cont_clas = False
@@ -155,6 +170,7 @@ while bloc:
 
     
     b += 1
+    print('secc: ',b)
 
 print('clases: ', num_clases)
 print('Descarga terminada: ', curso)
