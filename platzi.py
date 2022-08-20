@@ -109,7 +109,8 @@ def main():
     for link in links:
         with sync_playwright() as p:
             try:
-                   browser = p.chromium.launch_persistent_context(
+                
+                browser = p.chromium.launch_persistent_context(
                     user_data_dir= user_data,
                     #channel="chrome",
                     executable_path= chrome_path,
