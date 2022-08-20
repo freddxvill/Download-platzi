@@ -1,4 +1,5 @@
 # Librerias
+import time
 import requests
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
@@ -32,6 +33,7 @@ chrome_path = 'C:/Users/HP/AppData/Local/Google/Chrome/Application/chrome.exe'
 user_agent_nav = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
 
 # -----------------------------------
+delay = 2 # seg
 url_pag = 'https://platzi.com'
 video_link = ''
 
@@ -94,6 +96,9 @@ def download_video(path: str, clas_title: str):
 
             else:
                 print('Link no encontrado')
+                print('Si este problema persiste:')
+                print('--> Abrir el navegador e ir a clase donde se detuvo, y si le muestra un Captcha debe solo resolverlo')
+                print('--> Ejecutar de nuevo el script')
 
     except Exception as e:
         print('Error en la descarga: clase no descargada')
@@ -104,12 +109,13 @@ def download_video(path: str, clas_title: str):
 # ---------------------------------------------------------------------------------
 def main():
     links = list_links(url_curso, url_pag)
+    print('n clases: ',len(links))
     num_clases = 0
     
     for link in links:
         with sync_playwright() as p:
             try:
-                
+                time.sleep(delay)
                 browser = p.chromium.launch_persistent_context(
                     user_data_dir= user_data,
                     #channel="chrome",
@@ -121,7 +127,7 @@ def main():
                 #stealth_sync(page)
                 page.on("request", handle_requests)
                 page.goto(link, wait_until='networkidle')
-                page.wait_for_timeout(3*1000)
+                page.wait_for_timeout(4*1000)
                 title = page.title()
                 if title:
                     print('Clase ok')
