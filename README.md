@@ -49,9 +49,21 @@ Para saber mas ver : [Qué es M-DASH y HLS](https://www.cloudflare.com/es-es/lea
 
 ## Instrucciones
 
-Crear un cuenta en Platzi.
+Crear un cuenta en Platzi y autenticarse con el navegador Chrome.
 
-Ejecutar el archivo platzi.py (entorno activado)
+Modificar en el script de python los datos de su navegador:
+
+```bash
+user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data'
+chrome_path = 'C:/Users/.../AppData/Local/Google/Chrome/Application/chrome.exe'
+user_agent_nav = """ Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+                 AppleWebKit/537.36 (KHTML, like Gecko)
+                 Chrome/104.0.0.0 Safari/537.36 """
+```
+Esto con el fin de que el navegador este autenticado en la pagina, como tambien poder ejecutar el script en modo `headless=True`
+, para no abrir la interfaz.
+
+Ejecutar el archivo platzi.py (con el entorno activado)
 
 ```bash
 python platzi.py
@@ -60,13 +72,18 @@ En la consola se mostrara lo siguiente:
 
 ```notepad
 Descargador de cursos [colocar los datos correctamente]
-volver a ejecutar si falla el login o algun dato
+Importante: Debe estar ya logeado con su navegador Chrome
 --------------------------------------------------------------------------------------
-Curso [nombre completo]: Curso de Fundamentos de Web Scraping con Python y Xpath
-Email: tuemail@gmail.com
-Password: password
+Curso [copiar el link de la portada del curso][La pagina donde se muestra el contenido]
+Ejm: https://platzi.com/cursos/notacion-matematica/
+Link curso: https://platzi.com/cursos/notacion-matematica/
+
 Path [direccion de la carpeta donde sera descargado][ejm:'D:/cursos_programacion/'][debe terminar con un / ]
+[ Se creara una carpeta dentro del Path con el nombre del curso ]
 Path: D:/dir1/dir2/
+
+Curso [Nombre del curso][se colocara ese nombre a la carpeta]
+Curso: Curso de fundamentos de web scraping con python y xpath
 --------------------------------------------------------------------------------------
 ```
 y comenzara la descarga del curso.
@@ -74,24 +91,29 @@ y comenzara la descarga del curso.
 ```notepad
 Path ----> D:/dir1/dir2/curso de fundamentos de web scraping con python y xpath
 
-comenzando ...
+Iniciando ...
+
 link: ok
+Clase ok
 --------- Descargando clase: 1_Qué es el web scraping ---------
 frame=3629 fps=88 q=-1.0 Lsize= 10901kB time=00:02:06.97 bitrate= 795 kbits/s speed=3.09x
 
 link: ok
+Clase ok
 --------- Descargando clase: 2_Por qué aprender webscraping hoy ---------
 frame=5575 fps=88 q=-1.0 Lsize= 10901kB time=00:03:05.97 bitrate= 735 kbits/s speed=3.5x
 
 link: ok
+Clase ok
 --------- Descargando clase: 3_Python- el lenguaje mas poderoso para extraer datos ---------
 frame=6032 fps=88 q=-1.0 Lsize= 10901kB time=00:03:21.97 bitrate= 735 kbits/s speed=3.5x
     .
     .
     .
     .
+    .
+    .
 
-secciones: 5
 clases: 21
 Descarga terminada: curso de fundamentos de web scraping con python y xpath
 ```
@@ -101,18 +123,18 @@ Una vez finalizado, ir al carpeta para ver los videos descargados.
 
 ### Funcionamiento del script
 
-Al ejecutar el script con los datos del usuario de platzi, Playwright abrirá un navegador (en este caso Chrome) para insertar los datos en el login. Posteriormente se realiza una busqueda del curso dentro de la pagina.
-Una vez encontrado el curso, se dirige a la primera clase del curso y con Playwright se [intercepta](https://playwright.dev/python/docs/network#network-events) todas las requests que hace la pagina. Se captura el link del video en streaming y se lo pasa a ffmpeg para que realize la descarga y lo convierta directamente a .mp4.
+El script tomara el control del navegador Chrome (puede ser cambiado a otro tipo de navegadores), Playwright abrirá un navegador (en este caso Chrome), pero este sera el navegador de uso habitual con el que estamos autenticados en la pagina. Posteriormente se obtine los links de cada clase utilizando BeautifulSoup.
+Una vez obtenido los links de las clases, se dirige a la primera clase del curso y con Playwright se [intercepta](https://playwright.dev/python/docs/network#network-events) todas las requests que hace la pagina. Se captura el link del video en streaming y se lo pasa a ffmpeg para que realize la descarga y lo convierta directamente a .mp4.
 
 ## Notas importantes
 
-- El script abrirá y cerrará un navegador para hallar el link de cada video, esto sucederá debido a que se intentó usar el modo `headless=True`el cual permite navegar en una página sin tener que mostrar el navegador. Este parámetro funciona muy bien en otras páginas, pero no funciono en el caso de Platzi. Por lo tanto, hasta este momento, para que el script funcione, debe abrir y cerrar la interfaz para encontrar el link.
-- Si el script se detiene en la página del **Login**, solo debe detener el script y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
+- Si el script se detiene en la página, solo debe detener el script y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
 - El script descargará videos con resolución 1080x720, pero puede cambiarlo a 1920x1080 modificando dentro del script, en la funcion download, después de `'-map'` en vez de `'0:1'` colocar `'0:3'`. Esto seleccionará el video stream a 1080p, el cual tendrá un mayor tamaño, por lo cual la descarga tomará un poco más de tiempo.
 
 ## Referencias
 
 * [Playwright](https://playwright.dev/docs/intro)
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 * [FFmpeg](https://ffmpeg.org/)
 * [FFmpeg- streaming](https://trac.ffmpeg.org/wiki/StreamingGuide)
 * [Selecting streams with the -map option](https://trac.ffmpeg.org/wiki/Map)
