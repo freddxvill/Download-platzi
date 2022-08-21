@@ -114,7 +114,7 @@ num_clases = 0
     
 for link in links:
     tries = 1
-    while tries <= 2:
+    while tries < 3:
         with sync_playwright() as p:
             time.sleep(delay)
             browser = p.chromium.launch_persistent_context(
@@ -138,7 +138,7 @@ for link in links:
             tries += 1
 
 
-    if video_link:
+    if video_link and title:
         num_clases += 1
         print('clase: ',num_clases)
         clas_title = process_text(title)
@@ -147,7 +147,7 @@ for link in links:
         download_video(path=path_dir, clas_title=clas_title)
         title = ''
 
-    if tries > 1 and video_link == '':
+    if tries > 1 and video_link == '' and title:
         num_clases += 1
         clas_title = process_text(title)
         print(f'clase: {num_clases}_{clas_title}')
