@@ -49,7 +49,7 @@ Para saber mas ver : [Qué es M-DASH y HLS](https://www.cloudflare.com/es-es/lea
 
 ## Instrucciones
 
-Crear un cuenta en Platzi y autenticarse con el navegador Chrome.
+Crear un cuenta en Platzi, entrar en la pagina, realizar el login y despues cerrar el navegador.
 
 Modificar en el script de python los datos de su navegador.
 Para ver las direcciones, escribir arriba del navegador en url: chrome://version .
