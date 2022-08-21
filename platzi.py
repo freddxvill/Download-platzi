@@ -55,6 +55,7 @@ def download_video(path: str, clas_title: str):
         if os.path.exists(path):
             print('Archivo ya descargado:', clas_title)
             print('')
+            video_link=''
 
         else:
             if video_link:
@@ -69,6 +70,7 @@ def download_video(path: str, clas_title: str):
                 print('--> Abrir el navegador e ir a clase donde se detuvo, y si le muestra un Captcha debe solo resolverlo')
                 print('--> Ejecutar de nuevo el script')
                 print('')
+                video_link = ''
 
     except Exception as e:
         print('Error en la descarga: clase no descargada')
@@ -152,6 +154,8 @@ for link in links:
         clas_title = process_text(title)
         print(f'clase: {num_clases}_{clas_title}')
         print('-- > Sin link: posiblemente es una pagina')
+        print('')
+        title = ''
 
 
 print('clases: ', num_clases)
