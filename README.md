@@ -53,7 +53,7 @@ Crear un cuenta en Platzi y autenticarse con el navegador Chrome.
 
 Modificar en el script de python los datos de su navegador.
 Para ver las direcciones, escribir arriba del navegador en url: chrome://version .
-Para el user agent debe buscar en google 'what is my user agent' y copiarlo.
+Para el user agent debe ir a [what is my user agent](https://www.whatismybrowser.com/es/detect/what-is-my-user-agent/) y copiarlo.
 
 ```bash
 user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data' # Debe terminar en User Data
