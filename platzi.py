@@ -113,8 +113,8 @@ print('n clases: ',len(links))
 num_clases = 0
     
 for link in links:
-    no_inside = True
-    while no_inside:
+    tries = 1
+    while tries <= 2:
         with sync_playwright() as p:
             time.sleep(delay)
             browser = p.chromium.launch_persistent_context(
@@ -128,11 +128,15 @@ for link in links:
             #stealth_sync(page)
             page.on("request", handle_requests)
             page.goto(link, wait_until='networkidle')
-            page.wait_for_timeout(4*1000)
+            page.wait_for_timeout(3*1000)
             title = page.title()
-            if video_link:
-                print('Clase ok')
-                no_inside = False
+
+        if video_link:
+            print('Clase ok')
+            tries = 3
+        else:
+            tries += 1
+
 
     if video_link:
         num_clases += 1
@@ -142,6 +146,13 @@ for link in links:
         path_dir = complet_path + f'/{clas_title}.mp4'
         download_video(path=path_dir, clas_title=clas_title)
         title = ''
+
+    if tries > 1 and video_link == '':
+        num_clases += 1
+        clas_title = process_text(title)
+        print(f'clase: {num_clases}_{clas_title}')
+        print('-- > Sin link: posiblemente es una pagina')
+
 
 print('clases: ', num_clases)
 print('Descarga terminada: ', curso)
