@@ -7,25 +7,6 @@ from playwright.sync_api import sync_playwright
 import os
 import subprocess
 
-# Debido a las nuevas funciones de Playwright estos datos son innecesarios
-#email = str(input('Email [@gmail.com]: '))
-#password = str(input('Password: '))
-
-# ----------------- Datos ----------------------------------------
-print('Descargador de cursos [colocar los datos correctamente]')
-print('Importante: Debe estar ya logeado con su navegador Chrome')
-print('-'*80)
-print('Curso [copiar el link de la portada del curso][La pagina donde se muestra el contenido]')
-print('Ejm: https://platzi.com/cursos/notacion-matematica/')
-url_curso = str(input('Link curso: '))
-print('')
-print('Path [direccion de la carpeta donde sera descargado][Ejem: D:/cursos_programacion/ ][debe terminar con un /]')
-print('[ Se creara una carpeta dentro del Path con el nombre del curso ]')
-path = str(input('Path: '))
-print('')
-print('Curso [Nombre del curso][se colocara ese nombre a la carpeta]')
-curso = str(input('Curso: '))
-print('-'*80)
 
 #--------------- Ruta propia del navegador Chrome----------------
 user_data = 'C:/Users/HP/AppData/Local/Google/Chrome/User Data'
@@ -36,18 +17,6 @@ user_agent_nav = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (
 delay = 2 # seg
 url_pag = 'https://platzi.com'
 video_link = ''
-
-# --------- Creacion de la carpeta -------------
-curso = curso.lower()
-name_folder = curso.replace(':', '-')
-complet_path = path + name_folder
-print('Path ----> ',complet_path)
-print('')
-print('Iniciando ...')
-print('')
-
-if not os.path.exists(complet_path):
-    os.makedirs(complet_path)
 
 # -------------------------------------------------------------------------------------------------------------
 def list_links(url_curso: str, url_pag: str):
@@ -99,6 +68,7 @@ def download_video(path: str, clas_title: str):
                 print('Si este problema persiste:')
                 print('--> Abrir el navegador e ir a clase donde se detuvo, y si le muestra un Captcha debe solo resolverlo')
                 print('--> Ejecutar de nuevo el script')
+                print('')
 
     except Exception as e:
         print('Error en la descarga: clase no descargada')
@@ -106,50 +76,72 @@ def download_video(path: str, clas_title: str):
         pass
 
 
-# ---------------------------------------------------------------------------------
-def main():
-    links = list_links(url_curso, url_pag)
-    print('n clases: ',len(links))
-    num_clases = 0
+# ----------------- Datos --------------------------------------------------------
+
+print('Descargador de cursos [colocar los datos correctamente]')
+print('Importante: Debe estar ya logeado con su navegador Chrome')
+print('-'*80)
+print('Curso [copiar el link de la portada del curso][La pagina donde se muestra el contenido]')
+print('Ejm: https://platzi.com/cursos/notacion-matematica/')
+url_curso = str(input('Link curso: '))
+print('')
+print('Path [direccion de la carpeta donde sera descargado][Ejem: D:/cursos_programacion/ ][debe terminar con un /]')
+print('[ Se creara una carpeta dentro del Path con el nombre del curso ]')
+path = str(input('Path: '))
+print('')
+print('Curso [Nombre del curso][se colocara ese nombre a la carpeta]')
+curso = str(input('Curso: '))
+print('-'*80)
+
+# --------- Creacion de la carpeta ------------------
+
+curso = curso.lower()
+name_folder = curso.replace(':', '-')
+complet_path = path + name_folder
+print('Path ----> ',complet_path)
+print('')
+print('Iniciando ...')
+print('')
+
+if not os.path.exists(complet_path):
+    os.makedirs(complet_path)
+# ----------------------------------------------------
+
+
+links = list_links(url_curso, url_pag)
+print('n clases: ',len(links))
+num_clases = 0
     
-    for link in links:
+for link in links:
+    no_inside = True
+    while no_inside:
         with sync_playwright() as p:
-            try:
-                time.sleep(delay)
-                browser = p.chromium.launch_persistent_context(
-                    user_data_dir= user_data,
-                    #channel="chrome",
-                    executable_path= chrome_path,
-                    headless=True,
-                    user_agent= user_agent_nav
-                    )                                   
-                page = browser.new_page()
-                #stealth_sync(page)
-                page.on("request", handle_requests)
-                page.goto(link, wait_until='networkidle')
-                page.wait_for_timeout(4*1000)
-                title = page.title()
-                if title:
-                    print('Clase ok')
+            time.sleep(delay)
+            browser = p.chromium.launch_persistent_context(
+                user_data_dir= user_data,
+                #channel="chrome",
+                executable_path= chrome_path,
+                headless=True,
+                user_agent= user_agent_nav
+                )                                   
+            page = browser.new_page()
+            #stealth_sync(page)
+            page.on("request", handle_requests)
+            page.goto(link, wait_until='networkidle')
+            page.wait_for_timeout(4*1000)
+            title = page.title()
+            if video_link:
+                print('Clase ok')
+                no_inside = False
 
-            except Exception as e:
-                print(e)
-                browser.close()
-                pass
+    if video_link:
+        num_clases += 1
+        print('clase: ',num_clases)
+        clas_title = process_text(title)
+        clas_title = f'{num_clases}_{clas_title}'
+        path_dir = complet_path + f'/{clas_title}.mp4'
+        download_video(path=path_dir, clas_title=clas_title)
+        title = ''
 
-        if title:
-            num_clases += 1
-            print('clase: ',num_clases)
-
-            clas_title = process_text(title)
-            clas_title = f'{num_clases}_{clas_title}'
-            path_dir = complet_path + f'/{clas_title}.mp4'
-            download_video(path=path_dir, clas_title=clas_title)
-            title = ''
-
-    print('clases: ', num_clases)
-    print('Descarga terminada: ', curso)
-
-
-if __name__ == '__main__':
-    main()
+print('clases: ', num_clases)
+print('Descarga terminada: ', curso)

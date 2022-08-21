@@ -51,17 +51,18 @@ Para saber mas ver : [Qué es M-DASH y HLS](https://www.cloudflare.com/es-es/lea
 
 Crear un cuenta en Platzi y autenticarse con el navegador Chrome.
 
-Modificar en el script de python los datos de su navegador:
+Modificar en el script de python los datos de su navegador.
+Para ver las direcciones, escribir arriba del navegador en url: chrome://version
+Para el user agent debe buscar en google 'what is my user agent' y copiarlo.
 
 ```bash
-user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data'
+user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data' # Debe terminar en User Data
 chrome_path = 'C:/Users/.../AppData/Local/Google/Chrome/Application/chrome.exe'
 user_agent_nav = """ Mozilla/5.0 (Windows NT 10.0; Win64; x64)
                  AppleWebKit/537.36 (KHTML, like Gecko)
-                 Chrome/104.0.0.0 Safari/537.36 """
+                 Chrome/104.0.0.0 Safari/537.36 """   # version de chrome 104, coloque la version del navegador
 ```
-Esto con el fin de que el navegador este autenticado en la pagina, como tambien poder ejecutar el script en modo `headless=True`
-, para no abrir la interfaz.
+Esto con el fin de que el navegador este autenticado en la pagina y no abrir el navegador mientras descarga.
 
 Ejecutar el archivo platzi.py (con el entorno activado)
 
