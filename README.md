@@ -77,7 +77,7 @@ Importante: Debe estar ya logeado con su navegador Chrome
 --------------------------------------------------------------------------------------
 Curso [copiar el link de la portada del curso][La pagina donde se muestra el contenido]
 Ejm: https://platzi.com/cursos/notacion-matematica/
-Link curso: https://platzi.com/cursos/notacion-matematica/
+Link curso: https://platzi.com/cursos/web-scraping/
 
 Path [direccion de la carpeta donde sera descargado][ejm:'D:/cursos_programacion/'][debe terminar con un / ]
 [ Se creara una carpeta dentro del Path con el nombre del curso ]
