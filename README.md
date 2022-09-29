@@ -1,6 +1,6 @@
 # Descarga automática de Platzi
 
-Descarga automática mediante un script de Python utilizando Playwright y FFmpeg.
+Descarga automática y rapida mediante un script de Python utilizando Playwright y yt-dlp.
 
 🎭 [Playwright](https://playwright.dev/python/) es un framework para web testing y automatizacion. Tambien se lo utiliza para realizar web scraping y esta disponible en varios lenguajes, por lo que el codigo podria ser traducido a [Node.js](https://playwright.dev/docs/intro), [.NET](https://playwright.dev/dotnet/docs/intro) o [Java](https://playwright.dev/java/docs/intro).
 
@@ -36,10 +36,16 @@ pip install -r requirements.txt
 playwright install
 ```
 
-### Instalacion de FFmepg
+- Instalar yt-dlp, este ejecuta por debajo a ffmpeg.
 
-Descargar FFmepg desde (https://ffmpeg.org/) para windows.
-**En Windows descomprimir el .zip en el disco C y añadir su ruta a las variables del sistema, en path.**
+```bash
+pip install yt-dlp
+```
+
+### Instalacion de la version de FFmepg estable para yt-dlp
+
+Descargar la version estable de FFmepg para yt-dlp desde (https://github.com/yt-dlp/FFmpeg-Builds) para windows.
+**En Windows descomprimir el .zip en el disco C y añadir la ruta de la carpeta FFmpeg a las variables del sistema, en path.**
 
 Esta herramienta permite descargar videos no solo de links directos, sino tambien de videos tipo streaming en tiempo real tipo (M-DASH y HLS).
 
@@ -125,7 +131,9 @@ Una vez finalizado, ir al carpeta para ver los videos descargados.
 ### Funcionamiento del script
 
 El script tomara el control del navegador Chrome (puede ser cambiado a otro tipo de navegadores), Playwright abrirá un navegador (en este caso Chrome), pero este sera el navegador de uso habitual con el que estamos autenticados en la pagina. Posteriormente se obtine los links de cada clase utilizando BeautifulSoup.
-Una vez obtenido los links de las clases, se dirige a la primera clase del curso y con Playwright se [intercepta](https://playwright.dev/python/docs/network#network-events) todas las requests que hace la pagina. Se captura el link del video en streaming y se lo pasa a ffmpeg para que realize la descarga y lo convierta directamente a .mp4.
+Una vez obtenido los links de las clases, se dirige a la primera clase del curso y con Playwright se [intercepta](https://playwright.dev/python/docs/network#network-events) todas las requests que hace la pagina. Se captura el link del video en streaming y se lo pasa a yt-dlp que maneja por debajo a ffmpeg para que realize la descarga y lo convierta directamente a .mp4.
+
+Nuevo:  `yt-dlp` realiza una descarga mas rapida y sin perdida de frames de video y audio.
 
 ## Notas importantes
 
@@ -136,7 +144,8 @@ Una vez obtenido los links de las clases, se dirige a la primera clase del curso
 
 * [Playwright](https://playwright.dev/docs/intro)
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-* [FFmpeg](https://ffmpeg.org/)
+* [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+* [FFmpeg stable](https://github.com/yt-dlp/FFmpeg-Builds)
 * [FFmpeg- streaming](https://trac.ffmpeg.org/wiki/StreamingGuide)
 * [Selecting streams with the -map option](https://trac.ffmpeg.org/wiki/Map)
 * [How Download Videos Or Live Streaming From Azure Media Service Content](https://hoohoo.top/blog/20210627214233-how_download_azure_media_service_video_and_live_streaming_to_local/)

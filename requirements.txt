@@ -3,3 +3,4 @@ beautifulsoup4==4.11.1
 playwright==1.24.1
 playwright-stealth==1.0.5
 pytest-playwright==0.3.0
+yt-dlp==2022.8.19

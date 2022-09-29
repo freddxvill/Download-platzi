@@ -58,9 +58,11 @@ def download_video(path: str, clas_title: str):
             video_link=''
 
         else:
-            if video_link:
+            if video_link: # N es para multithread
                 print(f'--------  Descargando clase: {clas_title} -----------' )
-                subprocess.run(['ffmpeg','-loglevel' ,'quiet', '-stats', '-i', video_link, '-map', '0:0', '-map', '0:1', '-c', 'copy', path])
+                subprocess.run(['yt-dlp', '-N', '2', '-S', "+res", '-q', '--progress', '--fragment-retries', "infinite",
+                                '--downloader', "dash,m3u8:native", '--no-video-multistreams', '--no-audio-multistreams', '-o', path, video_link])
+                print('------------------ > Los warnings son normales')
                 print('')
                 video_link = ''
 
