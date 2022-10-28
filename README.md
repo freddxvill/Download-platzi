@@ -66,7 +66,7 @@ user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data' # Debe terminar
 chrome_path = 'C:/Users/.../AppData/Local/Google/Chrome/Application/chrome.exe'
 user_agent_nav = """ Mozilla/5.0 (Windows NT 10.0; Win64; x64)
                  AppleWebKit/537.36 (KHTML, like Gecko)
-                 Chrome/107.0.0.0 Safari/537.36 """   # version de chrome 104, coloque la version de su navegador
+                 Chrome/107.0.0.0 Safari/537.36 """   # version de chrome 107, coloque la version de su navegador
 ```
 Esto con el fin de que el navegador este autenticado en la pagina y no abrir el navegador mientras descarga.
 
