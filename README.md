@@ -4,7 +4,7 @@ Descarga automática y rapida mediante un script de Python utilizando Playwright
 
 🎭 [Playwright](https://playwright.dev/python/) es un framework para web testing y automatizacion. Tambien se lo utiliza para realizar web scraping y esta disponible en varios lenguajes, por lo que el codigo podria ser traducido a [Node.js](https://playwright.dev/docs/intro), [.NET](https://playwright.dev/dotnet/docs/intro) o [Java](https://playwright.dev/java/docs/intro).
 
-En este caso es utilizado junto con la herramienta [FFmpeg](https://ffmpeg.org/) para realizar descargas automatizadas de videos de `Platzi`pertenecientes a un curso.
+En este caso es utilizado junto con la herramienta [yt-dlp](https://github.com/yt-dlp/yt-dlp) para realizar descargas automatizadas de videos de `Platzi`pertenecientes a un curso.
 
 
 ## Instalación
