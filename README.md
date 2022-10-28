@@ -138,6 +138,7 @@ Nuevo:  `yt-dlp` realiza una descarga mas rapida y sin perdida de frames de vide
 ## Notas importantes
 
 - Si el script se detiene en la página, solo debe detener el script y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
+- Si aperece el error 403, es debido a que la pagina le solicita autenticarse manualmente una vez, por lo tanto vuelva a la pagina de su curso y complete la autenticación manual. Vuelva a ejecutar el script.
 
 ## Referencias
 
