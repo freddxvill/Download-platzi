@@ -8,7 +8,7 @@ En este caso es utilizado junto con la herramienta [FFmpeg](https://ffmpeg.org/)
 
 
 ## Instalación
-- Instalar [Python](https://www.python.org/downloads/).
+- Instalar [Python](https://www.python.org/downloads/). La version utilizada fue python 3.10.5
 - Descargar o clonar el codigo en una carpeta con git.
 
 ```bash
@@ -138,7 +138,6 @@ Nuevo:  `yt-dlp` realiza una descarga mas rapida y sin perdida de frames de vide
 ## Notas importantes
 
 - Si el script se detiene en la página, solo debe detener el script y volverlo a correr. El script detectará los archivos ya descargados, para no volverlos a descargar.
-- El script descargará videos con resolución 1080x720, pero puede cambiarlo a 1920x1080 modificando dentro del script, en la funcion download, después de `'-map'` en vez de `'0:1'` colocar `'0:3'`. Esto seleccionará el video stream a 1080p, el cual tendrá un mayor tamaño, por lo cual la descarga tomará un poco más de tiempo.
 
 ## Referencias
 
