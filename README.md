@@ -66,7 +66,7 @@ user_data = 'C:/Users/.../AppData/Local/Google/Chrome/User Data' # Debe terminar
 chrome_path = 'C:/Users/.../AppData/Local/Google/Chrome/Application/chrome.exe'
 user_agent_nav = """ Mozilla/5.0 (Windows NT 10.0; Win64; x64)
                  AppleWebKit/537.36 (KHTML, like Gecko)
-                 Chrome/107.0.0.0 Safari/537.36 """   # version de chrome 107, coloque la version de su navegador
+                 Chrome/107.0.0.0 Safari/537.36 """   # version de chrome 107, coloque la version de su navegador chrome
 ```
 Esto con el fin de que el navegador este autenticado en la pagina y no abrir el navegador mientras descarga.
 
@@ -100,18 +100,15 @@ Path ----> D:/dir1/dir2/curso de fundamentos de web scraping con python y xpath
 
 Iniciando ...
 
-link: ok
-Clase ok
+
 --------- Descargando clase: 1_Qué es el web scraping ---------
 frame=3629 fps=88 q=-1.0 Lsize= 10901kB time=00:02:06.97 bitrate= 795 kbits/s speed=3.09x
 
-link: ok
-Clase ok
+
 --------- Descargando clase: 2_Por qué aprender webscraping hoy ---------
 frame=5575 fps=88 q=-1.0 Lsize= 10901kB time=00:03:05.97 bitrate= 735 kbits/s speed=3.5x
 
-link: ok
-Clase ok
+
 --------- Descargando clase: 3_Python- el lenguaje mas poderoso para extraer datos ---------
 frame=6032 fps=88 q=-1.0 Lsize= 10901kB time=00:03:21.97 bitrate= 735 kbits/s speed=3.5x
     .
