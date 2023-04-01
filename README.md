@@ -45,7 +45,7 @@ pip install yt-dlp
 ### Instalacion de la version de FFmepg estable para yt-dlp
 
 Descargar la version estable de FFmepg para yt-dlp desde (https://github.com/yt-dlp/FFmpeg-Builds) para windows.
-**En Windows descomprimir el .zip en el disco C y añadir la ruta de la carpeta FFmpeg a las variables del sistema, en path.**
+**En Windows descomprimir el .zip en el disco C y añadir la ruta de la carpeta FFmpeg/bin a las variables del sistema, en path.**
 
 Esta herramienta permite descargar videos no solo de links directos, sino tambien de videos tipo streaming en tiempo real tipo (M-DASH y HLS).
 
