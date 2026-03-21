@@ -1,6 +1,8 @@
-# Descarga automática de Platzi
+# Descarga automática de Platz
 
 Descarga automática y rapida mediante un script de Python utilizando Playwright y yt-dlp.
+
+Nueva Version 2026 en [Descargador de cursos 2026](https://github.com/freddxvill/Descargador-de-Videos-Platz-2026)
 
 🎭 [Playwright](https://playwright.dev/python/) es un framework para web testing y automatizacion. Tambien se lo utiliza para realizar web scraping y esta disponible en varios lenguajes, por lo que el codigo podria ser traducido a [Node.js](https://playwright.dev/docs/intro), [.NET](https://playwright.dev/dotnet/docs/intro) o [Java](https://playwright.dev/java/docs/intro).
 
